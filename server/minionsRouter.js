@@ -21,17 +21,17 @@ minionsRouter.post('/', (req, res, next) => {
     res.status(201).send(newMinion);
 });
 
-minionsRouter.get('/minionId', (req, res, next) => {
+minionsRouter.get('/:minionId', (req, res, next) => {
     res.send(req.minion);
 });
 
 minionsRouter.put('/:minionId', (req, res, next) => {
-    let updatedMinionInstance = updateInstanceInDatabase('minions', req.body);
+    let updatedMinionInstance = db.updateInstanceInDatabase('minions', req.body);
     res.send(updatedMinionInstance);
 });
 
 minionsRouter.delete('/:minionId', (req, res, next) => {
-    const deleted = deleteFromDatabasebyId('minions', req.params.minionId);
+    const deleted = db.deleteFromDatabasebyId('minions', req.params.minionId);
     if (deleted) {
       res.status(204);
     } else {
