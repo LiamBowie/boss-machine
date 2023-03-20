@@ -1,6 +1,9 @@
 const db = require('./db');
 const express = require('express');
 const minionsRouter = express.Router();
+const workRouter = require('./workRouter')
+
+minionsRouter.use('/:minionId/work', workRouter);
 
 minionsRouter.param('minionId', (req, res, next, id) => {
     const minion = db.getFromDatabaseById('minions', id);
@@ -31,7 +34,7 @@ minionsRouter.put('/:minionId', (req, res, next) => {
 });
 
 minionsRouter.delete('/:minionId', (req, res, next) => {
-    const deleted = db.deleteFromDatabasebyId('minions', req.params.minionId);
+    const deleted = db.deleteFromDatabasebyId('minions', req.minion.id);
     if (deleted) {
       res.status(204);
     } else {
